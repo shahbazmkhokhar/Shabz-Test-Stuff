@@ -38,9 +38,17 @@
         .rounded {
             border-radius: 8px;
         }
+        /* Styling for image previews */
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border: 2px solid #00bfa5;
+        }
     </style>
 </head>
-<body class="bg-gray-100">
+<body>
     <div class="container mx-auto py-8">
         <h1 class="text-center text-4xl font-bold mb-8">Get Your New Look!</h1>
         
@@ -72,6 +80,8 @@
                         Front-Facing Headshot
                     </label>
                     <input id="front-headshot" type="file" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-700" required>
+                    <!-- Preview for front-facing image -->
+                    <img id="front-preview" class="image-preview hidden" alt="Front headshot preview">
                 </div>
                 
                 <!-- Side-facing headshot -->
@@ -80,6 +90,8 @@
                         Side-Facing Headshot
                     </label>
                     <input id="side-headshot" type="file" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-700" required>
+                    <!-- Preview for side-facing image -->
+                    <img id="side-preview" class="image-preview hidden" alt="Side headshot preview">
                 </div>
                 
                 <div class="flex items-center justify-center">
@@ -102,68 +114,90 @@
     </div>
 
     <script>
+        // Image previews for front-facing and side-facing headshots
+        document.getElementById('front-headshot').addEventListener('change', function(event) {
+            previewImage(event, 'front-preview');
+        });
+
+        document.getElementById('side-headshot').addEventListener('change', function(event) {
+            previewImage(event, 'side-preview');
+        });
+
+        // Preview image function
+        function previewImage(event, previewElementId) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function() {
+                const previewElement = document.getElementById(previewElementId);
+                previewElement.src = reader.result;
+                previewElement.classList.remove('hidden');
+            }
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
         document.getElementById('lead-form').addEventListener('submit', async function(event) {
-    event.preventDefault();
-    
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value;
-    const frontHeadshot = document.getElementById('front-headshot').files[0];
-    const sideHeadshot = document.getElementById('side-headshot').files[0];
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const frontHeadshot = document.getElementById('front-headshot').files[0];
+            const sideHeadshot = document.getElementById('side-headshot').files[0];
 
-    // Convert images to base64 (some APIs require this)
-    const frontImageBase64 = await toBase64(frontHeadshot);
-    const sideImageBase64 = await toBase64(sideHeadshot);
+            // Convert images to base64 (some APIs require this)
+            const frontImageBase64 = await toBase64(frontHeadshot);
+            const sideImageBase64 = await toBase64(sideHeadshot);
 
-    // DeepAI API Key
-    const apiKey = '799c93de-e94d-4dcb-af9a-c028632a7e30';  // Your API key
+            // DeepAI API Key
+            const apiKey = '799c93de-e94d-4dcb-af9a-c028632a7e30';  // Your API key
 
-    // Make requests to DeepAI API for the front-facing image
-    const frontResponse = await fetch('https://api.deepai.org/api/image-similarity', {
-        method: 'POST',
-        headers: {
-            'Api-Key': apiKey
-        },
-        body: new FormData().append('image1', frontHeadshot)
-    });
-    
-    const frontResult = await frontResponse.json();
-    console.log('Front Image Result:', frontResult); // Log the front image result to check response
+            // Make requests to DeepAI API for the front-facing image
+            const frontResponse = await fetch('https://api.deepai.org/api/image-similarity', {
+                method: 'POST',
+                headers: {
+                    'Api-Key': apiKey
+                },
+                body: new FormData().append('image1', frontHeadshot)
+            });
+            
+            const frontResult = await frontResponse.json();
+            console.log('Front Image Result:', frontResult); // Log the front image result to check response
 
-    // Make requests to DeepAI API for the side-facing image
-    const sideResponse = await fetch('https://api.deepai.org/api/image-similarity', {
-        method: 'POST',
-        headers: {
-            'Api-Key': apiKey
-        },
-        body: new FormData().append('image1', sideHeadshot)
-    });
-    
-    const sideResult = await sideResponse.json();
-    console.log('Side Image Result:', sideResult); // Log the side image result to check response
+            // Make requests to DeepAI API for the side-facing image
+            const sideResponse = await fetch('https://api.deepai.org/api/image-similarity', {
+                method: 'POST',
+                headers: {
+                    'Api-Key': apiKey
+                },
+                body: new FormData().append('image1', sideHeadshot)
+            });
+            
+            const sideResult = await sideResponse.json();
+            console.log('Side Image Result:', sideResult); // Log the side image result to check response
 
-    // Check if the response contains URLs for generated images
-    if (frontResult && frontResult.output_url) {
-        document.querySelector('#hairstyle-slider img:nth-child(1)').src = frontResult.output_url;
-    }
-    if (sideResult && sideResult.output_url) {
-        document.querySelector('#hairstyle-slider img:nth-child(2)').src = sideResult.output_url;
-    }
+            // Check if the response contains URLs for generated images
+            if (frontResult && frontResult.output_url) {
+                document.querySelector('#hairstyle-slider img:nth-child(1)').src = frontResult.output_url;
+            }
+            if (sideResult && sideResult.output_url) {
+                document.querySelector('#hairstyle-slider img:nth-child(2)').src = sideResult.output_url;
+            }
 
-    // Show the slider with generated images
-    document.getElementById('hairstyle-slider').classList.remove('hidden');
-});
+            // Show the slider with generated images
+            document.getElementById('hairstyle-slider').classList.remove('hidden');
+        });
 
-// Helper function to convert images to base64
-function toBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-    });
-}
-
+        // Helper function to convert images to base64
+        function toBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
     </script>
 </body>
 </html>
