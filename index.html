@@ -103,57 +103,67 @@
 
     <script>
         document.getElementById('lead-form').addEventListener('submit', async function(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const frontHeadshot = document.getElementById('front-headshot').files[0];
-            const sideHeadshot = document.getElementById('side-headshot').files[0];
+    event.preventDefault();
+    
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const frontHeadshot = document.getElementById('front-headshot').files[0];
+    const sideHeadshot = document.getElementById('side-headshot').files[0];
 
-            // Convert images to base64 (some APIs require this)
-            const frontImageBase64 = await toBase64(frontHeadshot);
-            const sideImageBase64 = await toBase64(sideHeadshot);
+    // Convert images to base64 (some APIs require this)
+    const frontImageBase64 = await toBase64(frontHeadshot);
+    const sideImageBase64 = await toBase64(sideHeadshot);
 
-            // DeepAI API Key
-            const apiKey = '799c93de-e94d-4dcb-af9a-c028632a7e30';  // Your API key
+    // DeepAI API Key
+    const apiKey = '799c93de-e94d-4dcb-af9a-c028632a7e30';  // Your API key
 
-            // Make requests to DeepAI API
-            const frontResponse = await fetch('https://api.deepai.org/api/image-similarity', {
-                method: 'POST',
-                headers: {
-                    'Api-Key': apiKey
-                },
-                body: new FormData().append('image1', frontHeadshot)
-            });
-            const frontResult = await frontResponse.json();
+    // Make requests to DeepAI API for the front-facing image
+    const frontResponse = await fetch('https://api.deepai.org/api/image-similarity', {
+        method: 'POST',
+        headers: {
+            'Api-Key': apiKey
+        },
+        body: new FormData().append('image1', frontHeadshot)
+    });
+    
+    const frontResult = await frontResponse.json();
+    console.log('Front Image Result:', frontResult); // Log the front image result to check response
 
-            const sideResponse = await fetch('https://api.deepai.org/api/image-similarity', {
-                method: 'POST',
-                headers: {
-                    'Api-Key': apiKey
-                },
-                body: new FormData().append('image1', sideHeadshot)
-            });
-            const sideResult = await sideResponse.json();
+    // Make requests to DeepAI API for the side-facing image
+    const sideResponse = await fetch('https://api.deepai.org/api/image-similarity', {
+        method: 'POST',
+        headers: {
+            'Api-Key': apiKey
+        },
+        body: new FormData().append('image1', sideHeadshot)
+    });
+    
+    const sideResult = await sideResponse.json();
+    console.log('Side Image Result:', sideResult); // Log the side image result to check response
 
-            // Assume result contains URLs to generated hairstyle images
-            document.querySelector('#hairstyle-slider img:nth-child(1)').src = frontResult.output_url;
-            document.querySelector('#hairstyle-slider img:nth-child(2)').src = sideResult.output_url;
-            
-            // Show the slider with generated images
-            document.getElementById('hairstyle-slider').classList.remove('hidden');
-        });
+    // Check if the response contains URLs for generated images
+    if (frontResult && frontResult.output_url) {
+        document.querySelector('#hairstyle-slider img:nth-child(1)').src = frontResult.output_url;
+    }
+    if (sideResult && sideResult.output_url) {
+        document.querySelector('#hairstyle-slider img:nth-child(2)').src = sideResult.output_url;
+    }
 
-        // Helper function to convert images to base64
-        function toBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
-        }
+    // Show the slider with generated images
+    document.getElementById('hairstyle-slider').classList.remove('hidden');
+});
+
+// Helper function to convert images to base64
+function toBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
+
     </script>
 </body>
 </html>
