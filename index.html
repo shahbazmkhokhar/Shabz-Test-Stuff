@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Transplant Lead Gen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto py-8">
+        <h1 class="text-center text-4xl font-bold mb-8">Get Your New Look!</h1>
+        
+        <!-- Lead Form -->
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-lg mx-auto">
+            <form id="lead-form">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+                        Full Name
+                    </label>
+                    <input id="name" type="text" placeholder="Enter your name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                        Email
+                    </label>
+                    <input id="email" type="email" placeholder="Enter your email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">
+                        Phone Number
+                    </label>
+                    <input id="phone" type="tel" placeholder="Enter your phone number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                
+                <!-- Front-facing headshot -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="front-headshot">
+                        Front-Facing Headshot
+                    </label>
+                    <input id="front-headshot" type="file" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-700" required>
+                </div>
+                
+                <!-- Side-facing headshot -->
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="side-headshot">
+                        Side-Facing Headshot
+                    </label>
+                    <input id="side-headshot" type="file" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-700" required>
+                </div>
+                
+                <div class="flex items-center justify-center">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Submit & Generate Styles
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Placeholder for thumbnail slider -->
+        <div id="hairstyle-slider" class="hidden">
+            <h2 class="text-center text-2xl font-bold mb-4">Choose Your Hairstyle</h2>
+            <div class="flex justify-center space-x-4">
+                <!-- Thumbnails will be generated here -->
+                <img src="" alt="Hairstyle 1" class="w-32 h-32 rounded-full border-2 border-gray-300">
+                <img src="" alt="Hairstyle 2" class="w-32 h-32 rounded-full border-2 border-gray-300">
+                <img src="" alt="Hairstyle 3" class="w-32 h-32 rounded-full border-2 border-gray-300">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Basic form submit handling, replace with actual AI integration logic
+        document.getElementById('lead-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const frontHeadshot = document.getElementById('front-headshot').files[0];
+            const sideHeadshot = document.getElementById('side-headshot').files[0];
+
+            // For now, just log the values and simulate an AI response
+            console.log({ name, email, phone, frontHeadshot, sideHeadshot });
+
+            // TODO: Insert AI image generation logic here
+
+            // Simulate showing the generated hairstyles
+            document.getElementById('hairstyle-slider').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
