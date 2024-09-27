@@ -5,6 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hair Transplant Lead Gen</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Theme Matching Venture Beyond */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a; /* Dark gray background */
+            color: #f5f5f5; /* Light text */
+        }
+        h1, h2 {
+            color: #00bfa5; /* Teal accent color */
+        }
+        .btn-primary {
+            background-color: #00bfa5; /* Teal */
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #009688; /* Darker teal */
+        }
+        .input-field {
+            background-color: #2c2c2c; /* Darker background for inputs */
+            border: 1px solid #00bfa5; /* Teal border */
+            color: #f5f5f5;
+        }
+        .input-field::placeholder {
+            color: #b0b0b0;
+        }
+        .container {
+            max-width: 700px;
+            padding: 20px;
+        }
+        .rounded {
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto py-8">
@@ -17,19 +51,19 @@
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
                         Full Name
                     </label>
-                    <input id="name" type="text" placeholder="Enter your name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <input id="name" type="text" placeholder="Enter your name" class="input-field shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" required>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
                         Email
                     </label>
-                    <input id="email" type="email" placeholder="Enter your email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <input id="email" type="email" placeholder="Enter your email" class="input-field shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" required>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">
                         Phone Number
                     </label>
-                    <input id="phone" type="tel" placeholder="Enter your phone number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <input id="phone" type="tel" placeholder="Enter your phone number" class="input-field shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" required>
                 </div>
                 
                 <!-- Front-facing headshot -->
@@ -49,7 +83,7 @@
                 </div>
                 
                 <div class="flex items-center justify-center">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <button type="submit" class="btn-primary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Submit & Generate Styles
                     </button>
                 </div>
@@ -60,7 +94,6 @@
         <div id="hairstyle-slider" class="hidden">
             <h2 class="text-center text-2xl font-bold mb-4">Choose Your Hairstyle</h2>
             <div class="flex justify-center space-x-4">
-                <!-- Thumbnails will be generated here -->
                 <img src="" alt="Hairstyle 1" class="w-32 h-32 rounded-full border-2 border-gray-300">
                 <img src="" alt="Hairstyle 2" class="w-32 h-32 rounded-full border-2 border-gray-300">
                 <img src="" alt="Hairstyle 3" class="w-32 h-32 rounded-full border-2 border-gray-300">
@@ -69,8 +102,7 @@
     </div>
 
     <script>
-        // Basic form submit handling, replace with actual AI integration logic
-        document.getElementById('lead-form').addEventListener('submit', function(event) {
+        document.getElementById('lead-form').addEventListener('submit', async function(event) {
             event.preventDefault();
             
             const name = document.getElementById('name').value;
@@ -79,14 +111,49 @@
             const frontHeadshot = document.getElementById('front-headshot').files[0];
             const sideHeadshot = document.getElementById('side-headshot').files[0];
 
-            // For now, just log the values and simulate an AI response
-            console.log({ name, email, phone, frontHeadshot, sideHeadshot });
+            // Convert images to base64 (some APIs require this)
+            const frontImageBase64 = await toBase64(frontHeadshot);
+            const sideImageBase64 = await toBase64(sideHeadshot);
 
-            // TODO: Insert AI image generation logic here
+            // DeepAI API Key
+            const apiKey = '799c93de-e94d-4dcb-af9a-c028632a7e30';  // Your API key
 
-            // Simulate showing the generated hairstyles
+            // Make requests to DeepAI API
+            const frontResponse = await fetch('https://api.deepai.org/api/image-similarity', {
+                method: 'POST',
+                headers: {
+                    'Api-Key': apiKey
+                },
+                body: new FormData().append('image1', frontHeadshot)
+            });
+            const frontResult = await frontResponse.json();
+
+            const sideResponse = await fetch('https://api.deepai.org/api/image-similarity', {
+                method: 'POST',
+                headers: {
+                    'Api-Key': apiKey
+                },
+                body: new FormData().append('image1', sideHeadshot)
+            });
+            const sideResult = await sideResponse.json();
+
+            // Assume result contains URLs to generated hairstyle images
+            document.querySelector('#hairstyle-slider img:nth-child(1)').src = frontResult.output_url;
+            document.querySelector('#hairstyle-slider img:nth-child(2)').src = sideResult.output_url;
+            
+            // Show the slider with generated images
             document.getElementById('hairstyle-slider').classList.remove('hidden');
         });
+
+        // Helper function to convert images to base64
+        function toBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
     </script>
 </body>
 </html>
