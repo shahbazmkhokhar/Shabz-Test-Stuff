@@ -6,39 +6,30 @@
     <title>Hair Transplant Lead Gen</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom Theme Matching Venture Beyond */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1a1a1a; /* Dark gray background */
-            color: #f5f5f5; /* Light text */
-        }
-        h1, h2 {
-            color: #00bfa5; /* Teal accent color */
-        }
-        .btn-primary {
-            background-color: #00bfa5; /* Teal */
-            color: #fff;
-            transition: background-color 0.3s ease;
-        }
-        .btn-primary:hover {
-            background-color: #009688; /* Darker teal */
-        }
-        .input-field {
-            background-color: #2c2c2c; /* Darker background for inputs */
-            border: 1px solid #00bfa5; /* Teal border */
+            background-color: #1a1a1a;
             color: #f5f5f5;
         }
-        .input-field::placeholder {
-            color: #b0b0b0;
+        h1, h2 {
+            color: #00bfa5;
+        }
+        .btn-primary {
+            background-color: #00bfa5;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background-color: #009688;
+        }
+        .input-field {
+            background-color: #2c2c2c;
+            border: 1px solid #00bfa5;
+            color: #f5f5f5;
         }
         .container {
             max-width: 700px;
             padding: 20px;
         }
-        .rounded {
-            border-radius: 8px;
-        }
-        /* Styling for image previews */
         .image-preview {
             max-width: 200px;
             max-height: 200px;
@@ -56,48 +47,34 @@
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-lg mx-auto">
             <form id="lead-form">
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
-                        Full Name
-                    </label>
-                    <input id="name" type="text" placeholder="Enter your name" class="input-field shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <label for="name">Full Name</label>
+                    <input id="name" type="text" placeholder="Enter your name" class="input-field w-full py-2 px-3" required>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-                        Email
-                    </label>
-                    <input id="email" type="email" placeholder="Enter your email" class="input-field shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <label for="email">Email</label>
+                    <input id="email" type="email" placeholder="Enter your email" class="input-field w-full py-2 px-3" required>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">
-                        Phone Number
-                    </label>
-                    <input id="phone" type="tel" placeholder="Enter your phone number" class="input-field shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <label for="phone">Phone Number</label>
+                    <input id="phone" type="tel" placeholder="Enter your phone number" class="input-field w-full py-2 px-3" required>
                 </div>
                 
-                <!-- Front-facing headshot -->
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="front-headshot">
-                        Front-Facing Headshot
-                    </label>
-                    <input id="front-headshot" type="file" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-700" required>
+                    <label for="front-headshot">Front-Facing Headshot</label>
+                    <input id="front-headshot" type="file" accept="image/*" class="w-full" required>
                     <!-- Preview for front-facing image -->
                     <img id="front-preview" class="image-preview hidden" alt="Front headshot preview">
                 </div>
                 
-                <!-- Side-facing headshot -->
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="side-headshot">
-                        Side-Facing Headshot
-                    </label>
-                    <input id="side-headshot" type="file" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-700" required>
+                    <label for="side-headshot">Side-Facing Headshot</label>
+                    <input id="side-headshot" type="file" accept="image/*" class="w-full" required>
                     <!-- Preview for side-facing image -->
                     <img id="side-preview" class="image-preview hidden" alt="Side headshot preview">
                 </div>
                 
                 <div class="flex items-center justify-center">
-                    <button type="submit" class="btn-primary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        Submit & Generate Styles
-                    </button>
+                    <button type="submit" class="btn-primary py-2 px-4">Submit & Generate Styles</button>
                 </div>
             </form>
         </div>
@@ -106,9 +83,9 @@
         <div id="hairstyle-slider" class="hidden">
             <h2 class="text-center text-2xl font-bold mb-4">Choose Your Hairstyle</h2>
             <div class="flex justify-center space-x-4">
-                <img src="" alt="Hairstyle 1" class="w-32 h-32 rounded-full border-2 border-gray-300">
-                <img src="" alt="Hairstyle 2" class="w-32 h-32 rounded-full border-2 border-gray-300">
-                <img src="" alt="Hairstyle 3" class="w-32 h-32 rounded-full border-2 border-gray-300">
+                <img src="" alt="Hairstyle 1" class="w-32 h-32 rounded-full">
+                <img src="" alt="Hairstyle 2" class="w-32 h-32 rounded-full">
+                <img src="" alt="Hairstyle 3" class="w-32 h-32 rounded-full">
             </div>
         </div>
     </div>
@@ -123,7 +100,6 @@
             previewImage(event, 'side-preview');
         });
 
-        // Preview image function
         function previewImage(event, previewElementId) {
             const file = event.target.files[0];
             const reader = new FileReader();
@@ -140,64 +116,42 @@
         document.getElementById('lead-form').addEventListener('submit', async function(event) {
             event.preventDefault();
             
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
+            const apiKey = 'r8_fGqtqTH5Wgm1nGunuCq9xWIyp4RWRbQ3dKBkb';  // Your Replicate API key
+
             const frontHeadshot = document.getElementById('front-headshot').files[0];
             const sideHeadshot = document.getElementById('side-headshot').files[0];
 
-            // Convert images to base64 (some APIs require this)
-            const frontImageBase64 = await toBase64(frontHeadshot);
-            const sideImageBase64 = await toBase64(sideHeadshot);
+            const modelVersion = "af731e421965ac3fd28422912632eafb881079fec5394bd0ffdeedb46590f725";  // Your Replicate model version ID
 
-            // DeepAI API Key
-            const apiKey = '799c93de-e94d-4dcb-af9a-c028632a7e30';  // Your API key
+            // Create a formData object to send the file
+            const formData = new FormData();
+            formData.append('image', frontHeadshot);  // Add the image to the request
 
-            // Make requests to DeepAI API for the front-facing image
-            const frontResponse = await fetch('https://api.deepai.org/api/image-similarity', {
+            // Send API request to Replicate's inpainting model
+            const response = await fetch('https://api.replicate.com/v1/predictions', {
                 method: 'POST',
                 headers: {
-                    'Api-Key': apiKey
+                    'Authorization': `Token ${apiKey}`,
+                    'Content-Type': 'application/json',
                 },
-                body: new FormData().append('image1', frontHeadshot)
+                body: JSON.stringify({
+                    version: modelVersion,
+                    input: {
+                        image: frontHeadshot,
+                        mask: "define-mask-area-here"  // Define the mask for the bald area
+                    }
+                })
             });
-            
-            const frontResult = await frontResponse.json();
-            console.log('Front Image Result:', frontResult); // Log the front image result to check response
 
-            // Make requests to DeepAI API for the side-facing image
-            const sideResponse = await fetch('https://api.deepai.org/api/image-similarity', {
-                method: 'POST',
-                headers: {
-                    'Api-Key': apiKey
-                },
-                body: new FormData().append('image1', sideHeadshot)
-            });
-            
-            const sideResult = await sideResponse.json();
-            console.log('Side Image Result:', sideResult); // Log the side image result to check response
+            const result = await response.json();
+            console.log('Result:', result);
 
-            // Check if the response contains URLs for generated images
-            if (frontResult && frontResult.output_url) {
-                document.querySelector('#hairstyle-slider img:nth-child(1)').src = frontResult.output_url;
+            // Assuming the output URL is in `result.output`
+            if (result && result.output) {
+                document.querySelector('#hairstyle-slider img:nth-child(1)').src = result.output;
+                document.getElementById('hairstyle-slider').classList.remove('hidden');
             }
-            if (sideResult && sideResult.output_url) {
-                document.querySelector('#hairstyle-slider img:nth-child(2)').src = sideResult.output_url;
-            }
-
-            // Show the slider with generated images
-            document.getElementById('hairstyle-slider').classList.remove('hidden');
         });
-
-        // Helper function to convert images to base64
-        function toBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
-        }
     </script>
 </body>
 </html>
